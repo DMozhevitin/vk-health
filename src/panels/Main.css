@@ -1,0 +1,57 @@
+.chart-title-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.chart-title {
+    margin: auto;
+}
+
+.values-container {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.values-container-top {
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100px;
+    grid-gap: 10px;
+    width: 100%;
+    height: 100px;
+}
+
+.daily-sugar, .daily-insulin {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+    border-radius: 12px;
+}
+
+.daily-sugar {
+    background: url(../img/grS.png) no-repeat center center;
+    background-size: 100%;
+}
+
+.daily-insulin {
+    background: url(../img/redIn.png) no-repeat center center;
+    background-size: 100%;
+}
+
+.values-container-bottom {
+    width: 95%;
+    height: 100px;
+    border-radius: 12px;
+
+    background: url(../img/perCarb.png) no-repeat center center;
+    background-size: 100%;
+    margin-top: 16px;
+    margin-left: 8px;
+}
+
+.full-size-img {
+    width: 100%;
+}
