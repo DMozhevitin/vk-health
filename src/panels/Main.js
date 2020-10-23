@@ -15,10 +15,11 @@ import Group from "@vkontakte/vkui/dist/components/Group/Group";
 import List from "@vkontakte/vkui/dist/components/List/List";
 import Avatar from "@vkontakte/vkui/dist/es6/components/Avatar/Avatar";
 import Cell from "@vkontakte/vkui/dist/es6/components/Cell/Cell";
-import { food } from '../food'
+import {food} from '../food'
 import {Search} from "@vkontakte/vkui/dist/es6";
 import Input from "@vkontakte/vkui/dist/es6/components/Input/Input";
 import Icon24Filter from "@vkontakte/icons/dist/es6/24/filter";
+import RoundAvatar from "../components/RoundAvatar";
 
 const Main = ({id, go, fetchedUser}) => {
     const [activeTab, setActiveTab] = useState('main')
@@ -161,7 +162,7 @@ const Main = ({id, go, fetchedUser}) => {
                         console.log(e.target.value)
                         setSearchQuery(e.target.value)
                     }}
-                           type="text" />
+                           type="text"/>
 
                     <Group>
                         <List>
@@ -170,10 +171,11 @@ const Main = ({id, go, fetchedUser}) => {
                                     .includes(searchQuery.toLowerCase())
                             })
                                 .map(f => (
-                                <Cell indicator={<Avatar/>}>
-                                    <Title level='2' weight='regular'>{f.name}</Title>
-                                </Cell>
-                            ))}
+                                    <Cell indicator={<RoundAvatar number={f.glycemic_index}/>}>
+                                        <Title level='2' weight='regular'>{f.name}</Title>
+                                    </Cell>
+
+                                ))}
                         </List>
                     </Group>
                 </Div>
