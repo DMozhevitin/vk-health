@@ -9,8 +9,8 @@ import Div from '@vkontakte/vkui/dist/components/Div/Div';
 import Avatar from '@vkontakte/vkui/dist/components/Avatar/Avatar';
 import {Chart} from "react-google-charts";
 import './Home.css'
-const Home = ({id, go, fetchedUser}) => {
 
+const Home = ({id, go, fetchedUser}) => {
     const events = [
         {
             eventName: "select",
