@@ -41,7 +41,7 @@ const Main = ({id, go, fetchedUser}) => {
     const [sugarItems, setSugarItems] = useState([
         {curValue: 3, curDate: new Date(2020, 10, 18, 12, 13).toLocaleString('ru')},
         {curValue: 5, curDate: new Date(2020, 10, 18, 13, 14).toLocaleString('ru')},
-        {curValue: 4.5, curDate: new Date(2020, 10, 18, 15, 16).toLocaleString('ru')},
+        {curValue: 4, curDate: new Date(2020, 10, 18, 15, 16).toLocaleString('ru')},
         {curValue: 6, curDate: new Date(2020, 10, 18, 22, 28).toLocaleString('ru')},
         {curValue: 4, curDate: new Date(2020, 10, 18, 14, 15).toLocaleString('ru')},
         {curValue: 6, curDate: new Date(2020, 10, 18, 10, 10).toLocaleString('ru')}
@@ -50,7 +50,7 @@ const Main = ({id, go, fetchedUser}) => {
         [['x', ''],
             ['18.10', 3],
             ['19.10', 5],
-            ['20.10', 4.5],
+            ['20.10', 4],
             ['21.10', 6],
             ['22.10', 4],
             ['23.10', 6],
