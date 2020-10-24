@@ -9,10 +9,11 @@ class AddSugarModal extends React.Component {
             curDate: new Date()
         }
     }
+
     render() {
 
         const handleButtonClick = () => {
-            document.dispatchEvent(new CustomEvent('on-sugar-modal-close', { detail: this.state}))
+            window.dispatchEvent(new CustomEvent('on-sugar-modal-close', {detail: this.state}))
         }
 
         return (
@@ -25,9 +26,7 @@ class AddSugarModal extends React.Component {
                         value={(this.state.curValue)}
                         step={0.5}
                         onChange={(e) => {
-                            console.log(e)
-                            this.setState( {curValue: e})
-                            console.log(this.state)
+                            this.setState({curValue: e})
                         }}
                     />
                 </Div>

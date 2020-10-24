@@ -36,9 +36,10 @@ const Main = ({id, go, fetchedUser}) => {
 
     const [activeTab, setActiveTab] = useState('main')
     const [searchQuery, setSearchQuery] = useState('')
+
     const [sugarItems, setSugarItems] = useState([])
     const [sugarActiveModal, setSugarActiveModal] = useState(null)
-
+    const [lastSugarButtonPress, setLastSugarButtonPress] = useState(+(new Date()))
 
     const insulin = 'insulin'
     const sugar = 'sugar'
@@ -54,18 +55,24 @@ const Main = ({id, go, fetchedUser}) => {
         }
     }
 
+    useEffect(() => {
+        window.addEventListener('on-sugar-modal-close', handleAddSugarEvent)
+
+        return () => { window.removeEventListener('keydown', handleAddSugarEvent) }
+    }, [])
+
+    const handleAddSugarEvent = (e) => {
+        console.log(e)
+        onAddSugarItem(e.detail)
+        setSugarActiveModal(null)
+    }
+
     const onAddSugarItem = (e) => {
         let newSugarItems = sugarItems
         newSugarItems.push(e)
 
         setSugarItems(newSugarItems)
     }
-
-    document.addEventListener('on-sugar-modal-close', (e) => {
-        console.log(e)
-        onAddSugarItem(e.detail)
-        setSugarActiveModal(null)
-    })
 
     const sugarModal = (
         <ModalRoot

@@ -12,6 +12,13 @@ const App = () => {
 	const [activePanel, setActivePanel] = useState('main');
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
+	// const [sugarItems, setSugarItems] = useState([])
+
+	// document.addEventListener('on-sugar-model-close', (e) => {
+	// 	let newSugarItems = sugarItems
+	// 	newSugarItems.push(e.detail)
+	// 	setSugarItems(newSugarItems)
+	// })
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -36,7 +43,11 @@ const App = () => {
 	return (
 		<View activePanel={activePanel} popout={popout}>
 			<Home id='home' fetchedUser={fetchedUser} go={go} />
-			<Main id='main' fetchedUser={fetchedUser} go={go} />
+			<Main
+				id='main'
+				fetchedUser={fetchedUser}
+				go={go}
+			/>
 			<Persik id='persik' go={go} />
 		</View>
 	);
