@@ -173,13 +173,14 @@ const Main = ({id, go, fetchedUser}) => {
                             </Title>
                         </Div>
 
-                        <Chart chartType='LineChart'
+                        <Chart chartType="ColumnChart"
                                width={'100%'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
                                data={sugarChartData}
-
+                               legendToggle
                                options={{
-                                   chartArea: {'width': '95%', 'height': '85%'}
+                                   chartArea: {'width': '90%', 'height': '85%'},
+                                   legend: "none"
                                }}
                                rootProps={{'data-testid': '1'}}
                         />
@@ -283,13 +284,14 @@ const Main = ({id, go, fetchedUser}) => {
             {
                 activeTab === sugar &&
                 <View modal={sugarModal}>
-                    <Chart chartType='LineChart'
+                    <Chart chartType="ColumnChart"
                            width={'100%'} height={'45vh'}
                            loader={<div>Loading Chart</div>}
                            data={sugarChartData}
 
                            options={{
-                               chartArea: {'width': '95%', 'height': '85%'}
+                               chartArea: {'width': '90%', 'height': '85%'},
+                               legend: "none"
                            }}
                            rootProps={{'data-testid': '2'}}
                     />
