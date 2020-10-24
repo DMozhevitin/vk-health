@@ -37,7 +37,7 @@ class SugarListItem extends React.Component {
                         color: '#909499'
                     }
                 }>
-                    16 окт., 22:28
+                    {this.props.date}
                 </Text>
             </Div>
         )

@@ -16,19 +16,29 @@ import List from "@vkontakte/vkui/dist/components/List/List";
 import Avatar from "@vkontakte/vkui/dist/es6/components/Avatar/Avatar";
 import Cell from "@vkontakte/vkui/dist/es6/components/Cell/Cell";
 import {food} from '../food'
-import {Search} from "@vkontakte/vkui/dist/es6";
+import {ModalCard, ModalRoot, Search, View} from "@vkontakte/vkui/dist/es6";
 import Input from "@vkontakte/vkui/dist/es6/components/Input/Input";
 import Icon24Filter from "@vkontakte/icons/dist/es6/24/filter";
 import RoundAvatar from "../components/RoundAvatar";
 import Counter from "@vkontakte/vkui/dist/es6/components/Counter/Counter";
 import HorizontalScroll from "@vkontakte/vkui/dist/es6/components/HorizontalScroll/HorizontalScroll";
 import SugarListItem from "../components/SugarListItem";
-
+import FixedLayout from "@vkontakte/vkui/dist/es6/components/FixedLayout/FixedLayout";
+import Separator from "@vkontakte/vkui/dist/es6/components/Separator/Separator";
+import Icon24Add from '@vkontakte/icons/dist/24/add';
+import Icon56MoneyTransferOutline from "@vkontakte/icons/dist/es6/56/money_transfer_outline";
+import InsideModalSugar from "./InsideModalSugar";
+import AddSugarModal from "../components/AddSugarModal";
 
 
 const Main = ({id, go, fetchedUser}) => {
+    const SUGAR_MODAL_CARD = 'sugar-modal-card'
+
     const [activeTab, setActiveTab] = useState('main')
     const [searchQuery, setSearchQuery] = useState('')
+    const [sugarItems, setSugarItems] = useState([])
+    const [sugarActiveModal, setSugarActiveModal] = useState(null)
+
 
     const insulin = 'insulin'
     const sugar = 'sugar'
@@ -43,6 +53,41 @@ const Main = ({id, go, fetchedUser}) => {
             return s.slice(0, 25) + '...'
         }
     }
+
+    const onAddSugarItem = (e) => {
+        let newSugarItems = sugarItems
+        newSugarItems.push(e)
+
+        setSugarItems(newSugarItems)
+    }
+
+    document.addEventListener('on-sugar-modal-close', (e) => {
+        console.log(e)
+        onAddSugarItem(e.detail)
+        setSugarActiveModal(null)
+    })
+
+    const sugarModal = (
+        <ModalRoot
+            activeModal={sugarActiveModal}
+            onClose={() => {setSugarActiveModal(null)}}
+        >
+
+            <ModalCard
+                id={SUGAR_MODAL_CARD}
+                onClose={() => setSugarActiveModal(null)}
+                // actions={[{
+                //     title: 'Добавить',
+                //     mode: 'commerce',
+                //     action: () => {
+                //         setTimeout(() => setSugarActiveModal(null), 100)
+                //     }
+                // }]}
+            >
+                <AddSugarModal/>
+            </ModalCard>
+        </ModalRoot>
+    )
 
     return (
         <Panel id={id}>
@@ -196,7 +241,7 @@ const Main = ({id, go, fetchedUser}) => {
 
             {
                 activeTab === sugar &&
-                <Div>
+                <View modal={sugarModal}>
                     <Chart chartType='LineChart'
                            width={'80vw'} height={'45vh'}
                            loader={<div>Loading Chart</div>}
@@ -245,19 +290,48 @@ const Main = ({id, go, fetchedUser}) => {
                     </Tabs>
 
                     <List>
-                        <Cell>
-                            <SugarListItem val='3.75'/>
-                        </Cell>
+                        {
+                            sugarItems.map(item => (
+                                <Cell>
+                                    <SugarListItem val={item.curValue} date={item.curDate}/>
+                                </Cell>
+                            ))
+                        }
+                        {/*<Cell>*/}
+                        {/*    <SugarListItem val='3.75'/>*/}
+                        {/*</Cell>*/}
 
-                        <Cell>
-                            <SugarListItem val='3.75'/>
-                        </Cell>
+                        {/*<Cell>*/}
+                        {/*    <SugarListItem val='3.75'/>*/}
+                        {/*</Cell>*/}
 
-                        <Cell>
-                            <SugarListItem val='3.75'/>
-                        </Cell>
+                        {/*<Cell>*/}
+                        {/*    <SugarListItem val='3.75'/>*/}
+                        {/*</Cell>*/}
                     </List>
-                </Div>
+
+                    <FixedLayout vertical="bottom" style={
+                        {
+                            background: '#FFFFFF',
+                            paddingLeft: '8px',
+                            paddingRight: '8px'
+                        }
+                    }>
+                        <Button
+                            onClick={() => setSugarActiveModal(SUGAR_MODAL_CARD)}
+                            size='l'
+                            before={<Icon24Add/>}
+                            mode="commerce"
+                            style={{
+                            width: '100%',
+                            marginBottom: '8px',
+                            display: 'flex',
+                            flexDirection: 'row',
+                        }}>
+                            Добавить
+                        </Button>
+                    </FixedLayout>
+                </View>
             }
         </Panel>
     )
