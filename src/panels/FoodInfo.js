@@ -29,7 +29,7 @@ const osName = platform();
 const FoodInfo = props => (
     <Panel id={props.id}>
         <PanelHeader
-            left={<PanelHeaderButton onClick={props.go} data-to="home">
+            left={<PanelHeaderButton onClick={props.go} data-to="main">
                 {osName === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
             </PanelHeaderButton>}
         >
@@ -61,7 +61,7 @@ const FoodInfo = props => (
                 </Div>
 
                 <Div className="column-container">
-                    <Headline weight="meduim">44 ккал</Headline>
+                    <Headline weight="meduim"> ккал</Headline>
                     <Headline weight="meduim">0.9 г</Headline>
                     <Headline weight="meduim">0.1 г</Headline>
                     <Headline weight="meduim">9 г</Headline>
