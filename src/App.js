@@ -8,6 +8,7 @@ import Home from './panels/Home';
 import Persik from './panels/Persik';
 import Main from "./panels/Main";
 import FoodInfo from "./panels/FoodInfo";
+import GetStat from "./panels/GetStat";
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('main');
@@ -51,6 +52,7 @@ const App = () => {
 			/>
 			<FoodInfo id={'foodInfo'} go={go}/>
 			<Persik id='persik' go={go} />
+			<GetStat id='getStat' go={go} />
 		</View>
 	);
 }

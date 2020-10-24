@@ -145,3 +145,7 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.Cell__main {
+    padding: 0 !important;
+}

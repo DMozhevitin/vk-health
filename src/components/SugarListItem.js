@@ -19,8 +19,8 @@ class SugarListItem extends React.Component {
             }>
                 <img src={gluko} alt='glukometer' style={
                     {
-                        width: '48px',
-                        height: '48px',
+                        width: '36px',
+                        height: '36px',
                     }
                 }/>
 

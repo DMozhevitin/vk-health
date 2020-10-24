@@ -3,7 +3,6 @@ import bridge from '@vkontakte/vk-bridge'
 import Panel from '@vkontakte/vkui/dist/components/Panel/Panel';
 import PanelHeader from '@vkontakte/vkui/dist/components/PanelHeader/PanelHeader';
 import Div from '@vkontakte/vkui/dist/components/Div/Div';
-import './GetStat.css'
 import '@vkontakte/vkui/dist/vkui.css';
 import PanelHeaderButton from "@vkontakte/vkui/dist/components/PanelHeaderButton/PanelHeaderButton";
 import {Button, IOS, platform} from "@vkontakte/vkui";

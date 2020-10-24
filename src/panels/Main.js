@@ -326,7 +326,7 @@ const Main = ({id, go, fetchedUser}) => {
                     </Tabs>
 
                     <List style={{
-                        marginBottom: '50px'
+                        marginBottom: '75px'
                     }}>
                         {
                             sugarItems.map(item => (
