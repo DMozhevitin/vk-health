@@ -43,13 +43,13 @@ const Main = ({id, go, fetchedUser}) => {
     const [sugarDaysOfWeek, setSugarDaysOfWeek] = useState(new Set())
     const [sugarChartData, setSugarChartData] = useState(
         [['x', ''],
-            ['18.10', 0],
-            ['19.10', 0],
-            ['20.10', 0],
-            ['21.10', 0],
-            ['22.10', 0],
-            ['23.10', 0],
-            ['24.10', 0]])
+        ['18.10', 0],
+        ['19.10', 0],
+        ['20.10', 0],
+        ['21.10', 0],
+        ['22.10', 0],
+        ['23.10', 0],
+        ['24.10', 0]])
 
     const insulin = 'insulin'
     const sugar = 'sugar'
@@ -75,10 +75,7 @@ const Main = ({id, go, fetchedUser}) => {
 
     const handleAddSugarEvent = (e) => {
         let newSugarItems = sugarItems
-        newSugarItems.push({
-            curValue: e.detail.curValue,
-            curDate: (new Date(e.detail.curDate)).toLocaleString('ru')
-        })
+        newSugarItems.push(e.detail)
         setSugarItems(newSugarItems)
 
         setSugarActiveModal(null)
@@ -173,14 +170,22 @@ const Main = ({id, go, fetchedUser}) => {
                             </Title>
                         </Div>
 
-                        <Chart chartType="ColumnChart"
-                               width={'100%'} height={'45vh'}
+                        <Chart chartType='LineChart'
+                               width={'80vw'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
-                               data={sugarChartData}
-                               legendToggle
+                               data={[
+                                   ['x', 'v'],
+                                   ['16.10', 0],
+                                   ['17.10', 10],
+                                   ['18.10', 23],
+                                   ['19.10', 17],
+                                   ['20.10', 18],
+                                   ['21.10', 9],
+                                   ['22.10', 11]
+                               ]}
+
                                options={{
-                                   chartArea: {'width': '85%', 'height': '85%'},
-                                   legend: "none"
+                                   chartArea: {'width': '95%', 'height': '85%'}
                                }}
                                rootProps={{'data-testid': '1'}}
                         />
@@ -188,7 +193,7 @@ const Main = ({id, go, fetchedUser}) => {
 
 
                     <Div className={'cards-container'}>
-                        <Title level='3' className='articles-container-title'>
+                        <Title level='3' className='cards-container-title'>
                             Сегодня
                         </Title>
                         <Div className={'cards-container-top'}>
@@ -212,12 +217,6 @@ const Main = ({id, go, fetchedUser}) => {
                             <Title level='3' weight='semibold' className='card-subtitle'>10 единиц | 120 грамм</Title>
                             {/*<img className={'full-size-img'} src={perCarb} alt={'daily-calories'}/>*/}
                         </Div>
-                        <Div className='article-getstat'>
-                            <Div className='article-description'>
-                                <Title level='2' weight='semibold'>Получить статистику</Title>
-                                <Text weight='semibold'>TODO</Text>
-                            </Div>
-                        </Div>
                     </Div>
 
                     <Div className='articles-container'>
@@ -225,28 +224,31 @@ const Main = ({id, go, fetchedUser}) => {
                             Статьи
                         </Title>
 
+                        <Div className='articles'>
+                            <Div className='article'>
+                                <Div className='article-description'>
+                                    <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
+                                    <Text weight='semibold'>Для человека, больного диабетом, крайне важно вести дневник.
+                                        Расскажем почему</Text>
+                                </Div>
+                            </Div>
 
+                            <Div className='article'>
+                                <Div className='article-description'>
+                                    <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
+                                    <Text weight='semibold'>Для человека, больного диабетом, крайне важно вести дневник.
+                                        Расскажем почему</Text>
+                                </Div>
+                            </Div>
 
-
-                        {/*<Div className='articles'>*/}
-                        <Div className='article-diary'>
-                            <Div className='article-description'>
-                                <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
-                                <Text weight='semibold'>Для человека, больного диабетом, крайне важно вести дневник.
-                                    Расскажем почему</Text>
+                            <Div className='article'>
+                                <Div className='article-description'>
+                                    <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
+                                    <Text weight='semibold'>Для человека, больного диабетом, крайне важно вести дневник.
+                                        Расскажем почему</Text>
+                                </Div>
                             </Div>
                         </Div>
-
-                        <Div className='article-gi'>
-                            <Div className='article-description'>
-                                <Title level='2' weight='semibold'>О гликемическом индексе</Title>
-                                <Text weight='semibold'>Что такое гликемический индекс и
-                                    почему его важно знать</Text>
-                            </Div>
-                        </Div>
-
-
-                        {/*</Div>*/}
                     </Div>
                 </Div>
             }
@@ -267,14 +269,7 @@ const Main = ({id, go, fetchedUser}) => {
                                     .includes(searchQuery.toLowerCase())
                             })
                                 .map(f => (
-                                    <Cell
-                                        style={{
-                                            background: 'none',
-                                            border: 'none',
-                                            outline: 'none'
-                                        }}
-                                        indicator={<RoundAvatar number={f.glycemic_index}/>}
-                                        onClick={go} data-to='foodInfo' item={f}>
+                                    <Cell indicator={<RoundAvatar number={f.glycemic_index}/>}>
                                         <Text weight='regular'>{shorten(f.name)}</Text>
                                     </Cell>
 
@@ -287,19 +282,16 @@ const Main = ({id, go, fetchedUser}) => {
             {
                 activeTab === sugar &&
                 <View modal={sugarModal}>
-                    <Div>
-                        <Chart chartType="ColumnChart"
-                               width={'100%'} height={'45vh'}
-                               loader={<div>Loading Chart</div>}
-                               data={sugarChartData}
+                    <Chart chartType='LineChart'
+                           width={'100%'} height={'45vh'}
+                           loader={<div>Loading Chart</div>}
+                           data={sugarChartData}
 
-                               options={{
-                                   chartArea: {'width': '85%', 'height': '85%'},
-                                   legend: "none"
-                               }}
-                               rootProps={{'data-testid': '2'}}
-                        />
-                    </Div>
+                           options={{
+                               chartArea: {'width': '95%', 'height': '85%'}
+                           }}
+                           rootProps={{'data-testid': '2'}}
+                    />
 
                     <Tabs mode="buttons" style={
                         {
@@ -328,9 +320,7 @@ const Main = ({id, go, fetchedUser}) => {
                         </HorizontalScroll>
                     </Tabs>
 
-                    <List style={{
-                        marginBottom: '50px'
-                    }}>
+                    <List>
                         {
                             sugarItems.map(item => (
                                 <Cell>
@@ -358,7 +348,7 @@ const Main = ({id, go, fetchedUser}) => {
                             paddingRight: '8px'
                         }
                     }>
-                        <Div><Button
+                        <Button
                             onClick={() => setSugarActiveModal(SUGAR_MODAL_CARD)}
                             size='xl'
                             before={<Icon24Add/>}
@@ -371,7 +361,6 @@ const Main = ({id, go, fetchedUser}) => {
                             }}>
                             Добавить
                         </Button>
-                        </Div>
                     </FixedLayout>
                 </View>
             }
