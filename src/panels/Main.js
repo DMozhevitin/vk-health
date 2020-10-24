@@ -20,6 +20,11 @@ import {Search} from "@vkontakte/vkui/dist/es6";
 import Input from "@vkontakte/vkui/dist/es6/components/Input/Input";
 import Icon24Filter from "@vkontakte/icons/dist/es6/24/filter";
 import RoundAvatar from "../components/RoundAvatar";
+import Counter from "@vkontakte/vkui/dist/es6/components/Counter/Counter";
+import HorizontalScroll from "@vkontakte/vkui/dist/es6/components/HorizontalScroll/HorizontalScroll";
+import SugarListItem from "../components/SugarListItem";
+
+
 
 const Main = ({id, go, fetchedUser}) => {
     const [activeTab, setActiveTab] = useState('main')
@@ -31,11 +36,20 @@ const Main = ({id, go, fetchedUser}) => {
     const carbo = 'carbo'
     const index = 'index'
 
+    const shorten = (s) => {
+        if (s.length <= 25) {
+            return s
+        } else {
+            return s.slice(0, 25) + '...'
+        }
+    }
+
     return (
         <Panel id={id}>
             <PanelHeader>Основное</PanelHeader>
             <Tabs>
-                <TabsItem onClick={() => setActiveTab(insulin)}
+                <TabsItem
+                    onClick={() => setActiveTab(insulin)}
                           selected={activeTab === insulin}>
                     Инсулин
                 </TabsItem>
@@ -72,7 +86,7 @@ const Main = ({id, go, fetchedUser}) => {
                         </Div>
 
                         <Chart chartType='LineChart'
-                               width={'100vw'} height={'450px'}
+                               width={'80vw'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
                                data={[
                                    ['x', 'dogs'],
@@ -159,7 +173,6 @@ const Main = ({id, go, fetchedUser}) => {
                 activeTab === index &&
                 <Div>
                     <Input onChange={(e) => {
-                        console.log(e.target.value)
                         setSearchQuery(e.target.value)
                     }}
                            type="text"/>
@@ -172,12 +185,78 @@ const Main = ({id, go, fetchedUser}) => {
                             })
                                 .map(f => (
                                     <Cell indicator={<RoundAvatar number={f.glycemic_index}/>}>
-                                        <Title level='2' weight='regular'>{f.name}</Title>
+                                        <Text weight='regular'>{shorten(f.name)}</Text>
                                     </Cell>
 
                                 ))}
                         </List>
                     </Group>
+                </Div>
+            }
+
+            {
+                activeTab === sugar &&
+                <Div>
+                    <Chart chartType='LineChart'
+                           width={'100vw'} height={'450px'}
+                           loader={<div>Loading Chart</div>}
+                           data={[
+                               ['x', 'dogs'],
+                               ['16.10', 0],
+                               ['17.10', 10],
+                               ['18.10', 23],
+                               ['19.10', 17],
+                               ['20.10', 18],
+                               ['21.10', 9],
+                               ['22.10', 11]
+                           ]}
+
+                           options={{
+                               chartArea: {'width': '95%', 'height': '85%'}
+                           }}
+                           rootProps={{'data-testid': '1'}}
+                    />
+
+                    <Tabs mode="buttons" style = {
+                        {
+                            width: '100%',
+                            // background: '#EBEDF0',
+                            borderRadius: '12px'
+                        }
+                    }>
+                        <HorizontalScroll style = {
+                            {
+                                width: '100%'
+                            }
+                        }>
+                            <TabsItem className='tab-item-25'>
+                                День
+                            </TabsItem>
+                            <TabsItem selected className='tab-item-25'>
+                                Неделя
+                            </TabsItem>
+                            <TabsItem className='tab-item-25'>
+                                Месяц
+                            </TabsItem>
+                            <TabsItem className='tab-item-25'>
+                                Год
+                            </TabsItem>
+                        </HorizontalScroll>
+                    </Tabs>
+
+                    <List>
+                        <Cell>
+                            <SugarListItem val='3.75'/>
+                        </Cell>
+
+                        <Cell>
+                            <SugarListItem val='3.75'/>
+                        </Cell>
+
+                        <Cell>
+                            <SugarListItem val='3.75'/>
+                        </Cell>
+                    </List>
                 </Div>
             }
         </Panel>

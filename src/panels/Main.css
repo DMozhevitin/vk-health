@@ -94,3 +94,25 @@
     margin: 0;
     color: #FFFFFF;
 }
+
+/*.TabsItem__in {*/
+/*    width: 100px;*/
+/*    !*display: grid !important;*!*/
+/*    !*grid-template-columns: 1fr 1fr 1fr 1fr 1fr;*!*/
+/*    !*grid-template-rows: 100px;*!*/
+/*}*/
+
+.tab-item-25 {
+    width: 20vw;
+    margin-left: 20px;
+}
+
+.HorizontalScroll__in {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 50px;
+}
+
+.TabsItem__in {
+    font-size: 10px !important;
+}
