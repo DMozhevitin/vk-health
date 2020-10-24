@@ -198,7 +198,7 @@ const Main = ({id, go, fetchedUser}) => {
                 activeTab === sugar &&
                 <Div>
                     <Chart chartType='LineChart'
-                           width={'100vw'} height={'450px'}
+                           width={'80vw'} height={'45vh'}
                            loader={<div>Loading Chart</div>}
                            data={[
                                ['x', 'dogs'],
