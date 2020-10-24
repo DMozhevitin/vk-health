@@ -6,7 +6,7 @@ class AddSugarModal extends React.Component {
         super(props);
         this.state = {
             curValue: 0,
-            curDate: new Date()
+            curDate: null
         }
     }
 

@@ -123,16 +123,16 @@
     color: #FFFFFF;
 }
 
-.tab-item-25 {
-    width: 20vw;
-    margin-left: 20px;
-}
+/*.tab-item-25 {*/
+/*    width: 20vw;*/
+/*    margin-left: 20px;*/
+/*}*/
 
-.HorizontalScroll__in {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 50px;
-}
+/*.HorizontalScroll__in {*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr 1fr 1fr 1fr;*/
+/*    grid-template-rows: 50px;*/
+/*}*/
 
 .TabsItem__in {
     font-size: 10px !important;
