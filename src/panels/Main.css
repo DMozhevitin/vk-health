@@ -181,3 +181,11 @@
 .TabsItem__in {
     font-size: 10px !important;
 }
+
+
+.HorizontalScroll__in{
+    /*width: 95%;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
