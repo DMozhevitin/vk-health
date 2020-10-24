@@ -38,29 +38,43 @@ const Main = ({id, go, fetchedUser}) => {
     const [searchQuery, setSearchQuery] = useState('')
     const [activeModal, setActiveModal] = useState(null)
 
-    const [sugarItems, setSugarItems] = useState([])
+    const [sugarItems, setSugarItems] = useState([
+        {curValue: 3, curDate: new Date(2020, 10, 18, 12, 13).toLocaleString('ru')},
+        {curValue: 5, curDate: new Date(2020, 10, 18, 13, 14).toLocaleString('ru')},
+        {curValue: 4.5, curDate: new Date(2020, 10, 18, 15, 16).toLocaleString('ru')},
+        {curValue: 6, curDate: new Date(2020, 10, 18, 22, 28).toLocaleString('ru')},
+        {curValue: 4, curDate: new Date(2020, 10, 18, 14, 15).toLocaleString('ru')},
+        {curValue: 6, curDate: new Date(2020, 10, 18, 10, 10).toLocaleString('ru')}
+    ])
     const [sugarChartData, setSugarChartData] = useState(
         [['x', ''],
-            ['18.10', 0],
-            ['19.10', 0],
-            ['20.10', 0],
-            ['21.10', 0],
-            ['22.10', 0],
-            ['23.10', 0],
+            ['18.10', 3],
+            ['19.10', 5],
+            ['20.10', 4.5],
+            ['21.10', 6],
+            ['22.10', 4],
+            ['23.10', 6],
             ['24.10', 0]])
 
 
     const [insulinChartData, setInsulinChartData] = useState(
         [['x', ''],
-            ['18.10', 0],
-            ['19.10', 0],
-            ['20.10', 0],
-            ['21.10', 0],
-            ['22.10', 0],
-            ['23.10', 0],
+            ['18.10', 2],
+            ['19.10', 4],
+            ['20.10', 3],
+            ['21.10', 5],
+            ['22.10', 3],
+            ['23.10', 4],
             ['24.10', 0]]
     )
-    const [insulinItems, setInsulinItems] = useState([])
+    const [insulinItems, setInsulinItems] = useState([
+        {curValue: 2, curDate: new Date(2020, 10, 18, 12, 13).toLocaleString('ru')},
+        {curValue: 4, curDate: new Date(2020, 10, 18, 13, 14).toLocaleString('ru')},
+        {curValue: 3, curDate: new Date(2020, 10, 18, 15, 16).toLocaleString('ru')},
+        {curValue: 5, curDate: new Date(2020, 10, 18, 22, 28).toLocaleString('ru')},
+        {curValue: 3, curDate: new Date(2020, 10, 18, 14, 15).toLocaleString('ru')},
+        {curValue: 4, curDate: new Date(2020, 10, 18, 10, 10).toLocaleString('ru')}
+    ])
 
     const insulin = 'insulin'
     const sugar = 'sugar'
@@ -142,12 +156,19 @@ const Main = ({id, go, fetchedUser}) => {
         } else if (type === 'insulin') {
             console.log('insulin')
             let newInsulinChartData = insulinChartData
-            newInsulinChartData[day] = [insulinChartData[day][0], v]
+            newInsulinChartData[day] = [insulinChartData[day][0], insulinChartData[day][1] + v]
             setInsulinChartData(newInsulinChartData)
         }
 
     }
 
+    const dailyInsuline = () => {
+        return insulinChartData[insulinChartData.length - 1][1].toFixed(1);
+    }
+
+    const dailySugar = () => {
+        return sugarChartData[insulinChartData.length - 1][1].toFixed(1);
+    }
 
     const modal = (
         <ModalRoot
@@ -175,7 +196,7 @@ const Main = ({id, go, fetchedUser}) => {
 
     return (
         <Panel id={id}>
-            <PanelHeader>Основное</PanelHeader>
+            <PanelHeader>Твой сахар</PanelHeader>
             <Tabs>
                 <TabsItem
                     onClick={() => setActiveTab(insulin)}
@@ -234,15 +255,15 @@ const Main = ({id, go, fetchedUser}) => {
                         </Title>
                         <Div className={'cards-container-top'}>
                             <Div className={'card daily-sugar'}>
-                                <Title level='3' weight='semibold' className='card-subtitle'>Средний сахар</Title>
-                                <Title level='3' weight='medium'>23 октября</Title>
-                                <Title level='3' weight='medium'>5.55 ммоль/л</Title>
+                                <Title level='3' weight='semibold' className='card-subtitle'>Cахар</Title>
+                                <Title level='3' weight='medium'>24 октября</Title>
+                                <Title level='3' weight='medium'>{dailySugar()} ммоль/л</Title>
                             </Div>
 
                             <Div className={'card daily-insulin'}>
-                                <Title level='3' weight='semibold' className='card-subtitle'>Средний сахар</Title>
-                                <Title level='3' weight='medium'>23 октября</Title>
-                                <Title level='3' weight='medium'>5.55 ммоль/л</Title>
+                                <Title level='3' weight='semibold' className='card-subtitle'>Инсулин</Title>
+                                <Title level='3' weight='medium'>24 октября</Title>
+                                <Title level='3' weight='medium'>{dailyInsuline()} ед.</Title>
                             </Div>
 
 
@@ -251,14 +272,21 @@ const Main = ({id, go, fetchedUser}) => {
                         <Div className={'card daily-stats'}>
                             <Title level='3' weight='semibold' className='card-subtitle'>Количество углеводов</Title>
                             <Title level='3' weight='semibold' className='card-subtitle'>10 единиц | 120 грамм</Title>
-                            {/*<img className={'full-size-img'} src={perCarb} alt={'daily-calories'}/>*/}
                         </Div>
 
-                        <Div className='article-getstat'>
-                            <Div className='article-description' onClick={go} data-to='getStat'>
-                                <Title level='2' weight='semibold'>Получить статистику</Title>
-                                <Text weight='semibold'>TODO</Text>
-                            </Div>
+                        <Div className='card article-getstat' onClick={go} data-to='getStat'
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                            }}>
+                                <Title level='2' className='card-subtitle'  weight='semibold'
+                                       style={{
+                                           color: 'white'
+                                       }}>Получить статистику</Title>
+                                <Text weight='semibold' className='card-subtitle' style={{
+                                    color: 'white'
+                                }}>Держите свое здоровье под контролем</Text>
                         </Div>
                     </Div>
 
@@ -330,6 +358,9 @@ const Main = ({id, go, fetchedUser}) => {
                 activeTab === insulin &&
                 <View modal={modal}>
                     <Div>
+                        <Title className="chart-title" level="3" weight="semibold">
+                            Уровень инсулина за последнюю неделю
+                        </Title>
                         <Chart chartType="ColumnChart"
                                width={'100%'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
@@ -370,7 +401,7 @@ const Main = ({id, go, fetchedUser}) => {
                     </Tabs>
 
                     <List style={{
-                        marginBottom: '50px'
+                        marginBottom: '75px'
                     }}>
                         {
                             insulinItems.map(item => (
@@ -409,6 +440,9 @@ const Main = ({id, go, fetchedUser}) => {
                 activeTab === sugar &&
                 <View modal={modal}>
                     <Div>
+                        <Title className="chart-title" level="3" weight="semibold">
+                            Уровень сахара за последнюю неделю
+                        </Title>
                         <Chart chartType="ColumnChart"
                                width={'100%'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
@@ -450,7 +484,7 @@ const Main = ({id, go, fetchedUser}) => {
                     </Tabs>
 
                     <List style={{
-                        marginBottom: '50px'
+                        marginBottom: '75px'
                     }}>
                         {
                             sugarItems.map(item => (
