@@ -7,6 +7,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import Home from './panels/Home';
 import Persik from './panels/Persik';
 import Main from "./panels/Main";
+import FoodInfo from "./panels/FoodInfo";
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('main');
@@ -48,6 +49,7 @@ const App = () => {
 				fetchedUser={fetchedUser}
 				go={go}
 			/>
+			<FoodInfo id={'foodInfo'} go={go}/>
 			<Persik id='persik' go={go} />
 		</View>
 	);

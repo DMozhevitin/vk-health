@@ -263,7 +263,14 @@ const Main = ({id, go, fetchedUser}) => {
                                     .includes(searchQuery.toLowerCase())
                             })
                                 .map(f => (
-                                    <Cell indicator={<RoundAvatar number={f.glycemic_index}/>}>
+                                    <Cell
+                                        style={{
+                                            background: 'none',
+                                            border: 'none',
+                                            outline: 'none'
+                                        }}
+                                        indicator={<RoundAvatar number={f.glycemic_index}/>}
+                                        onClick={go} data-to='foodInfo' item={f}>
                                         <Text weight='regular'>{shorten(f.name)}</Text>
                                     </Cell>
 
@@ -314,7 +321,9 @@ const Main = ({id, go, fetchedUser}) => {
                         </HorizontalScroll>
                     </Tabs>
 
-                    <List>
+                    <List style={{
+                        marginBottom: '50px'
+                    }}>
                         {
                             sugarItems.map(item => (
                                 <Cell>

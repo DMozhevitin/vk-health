@@ -3,6 +3,7 @@ import Div from "@vkontakte/vkui/dist/es6/components/Div/Div";
 
 import gluko from '../img/gluko.png'
 import Text from "@vkontakte/vkui/dist/es6/components/Typography/Text/Text";
+import Icon16Clear from '@vkontakte/icons/dist/16/clear';
 
 class SugarListItem extends React.Component {
 
@@ -39,6 +40,8 @@ class SugarListItem extends React.Component {
                 }>
                     {this.props.date}
                 </Text>
+
+                <Icon16Clear width={20} height={20} style={{color:'red'}}/>
             </Div>
         )
     }
