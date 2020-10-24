@@ -1,7 +1,7 @@
 import {Button, Div, Input, Radio, Slider, Title} from "@vkontakte/vkui";
 import React, {useState} from "react";
 
-class AddSugarModal extends React.Component {
+class AddValueModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,15 +13,25 @@ class AddSugarModal extends React.Component {
     render() {
 
         const handleButtonClick = () => {
-            window.dispatchEvent(new CustomEvent('on-sugar-modal-close', {detail: {
-                    curValue: this.state.curValue,
-                    curDate: this.state.curDate
-                }}))
+            if (this.props.type === 'sugar') {
+                console.log('sugar type')
+                window.dispatchEvent(new CustomEvent('on-sugar-modal-close', {detail: {
+                        curValue: this.state.curValue,
+                        curDate: this.state.curDate
+                    }}))
+            } else {
+                console.log('insulin type')
+                window.dispatchEvent(new CustomEvent('on-insulin-modal-close', {detail: {
+                        curValue: this.state.curValue,
+                        curDate: this.state.curDate
+                    }}))
+            }
+
         }
 
         return (
             <Div className="column-container">
-                <Title level="1" weight="regular" align='center'>{this.state.curValue.toFixed(1)} ммоль/л</Title>
+                <Title level="1" weight="regular" align='center'>{this.state.curValue.toFixed(1)} {this.props.ed_izm}</Title>
                 <Div>
                     <Slider
                         min={0}
@@ -68,4 +78,4 @@ class AddSugarModal extends React.Component {
     }
 }
 
-export default AddSugarModal
+export default AddValueModal

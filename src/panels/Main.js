@@ -22,25 +22,23 @@ import Icon24Filter from "@vkontakte/icons/dist/es6/24/filter";
 import RoundAvatar from "../components/RoundAvatar";
 import Counter from "@vkontakte/vkui/dist/es6/components/Counter/Counter";
 import HorizontalScroll from "@vkontakte/vkui/dist/es6/components/HorizontalScroll/HorizontalScroll";
-import SugarListItem from "../components/SugarListItem";
+import ListItem from "../components/ListItem";
 import FixedLayout from "@vkontakte/vkui/dist/es6/components/FixedLayout/FixedLayout";
 import Separator from "@vkontakte/vkui/dist/es6/components/Separator/Separator";
 import Icon24Add from '@vkontakte/icons/dist/24/add';
 import Icon56MoneyTransferOutline from "@vkontakte/icons/dist/es6/56/money_transfer_outline";
 import InsideModalSugar from "./InsideModalSugar";
-import AddSugarModal from "../components/AddSugarModal";
+import AddValueModal from "../components/AddValueModal";
 
 
 const Main = ({id, go, fetchedUser}) => {
     const SUGAR_MODAL_CARD = 'sugar-modal-card'
-
+    const INSULIN_MODAL_CARD = 'insulin-modal-card'
     const [activeTab, setActiveTab] = useState('main')
     const [searchQuery, setSearchQuery] = useState('')
+    const [activeModal, setActiveModal] = useState(null)
 
     const [sugarItems, setSugarItems] = useState([])
-    const [sugarActiveModal, setSugarActiveModal] = useState(null)
-    const [lastSugarButtonPress, setLastSugarButtonPress] = useState(+(new Date()))
-    const [sugarDaysOfWeek, setSugarDaysOfWeek] = useState(new Set())
     const [sugarChartData, setSugarChartData] = useState(
         [['x', ''],
             ['18.10', 0],
@@ -50,6 +48,19 @@ const Main = ({id, go, fetchedUser}) => {
             ['22.10', 0],
             ['23.10', 0],
             ['24.10', 0]])
+
+
+    const [insulinChartData, setInsulinChartData] = useState(
+        [['x', ''],
+            ['18.10', 0],
+            ['19.10', 0],
+            ['20.10', 0],
+            ['21.10', 0],
+            ['22.10', 0],
+            ['23.10', 0],
+            ['24.10', 0]]
+    )
+    const [insulinItems, setInsulinItems] = useState([])
 
     const insulin = 'insulin'
     const sugar = 'sugar'
@@ -73,6 +84,14 @@ const Main = ({id, go, fetchedUser}) => {
         }
     }, [])
 
+    useEffect(() => {
+        window.addEventListener('on-insulin-modal-close', handleAddInsulinEvent)
+
+        return () => {
+            window.removeEventListener('keydown', handleAddInsulinEvent)
+        }
+    }, [])
+
     const handleAddSugarEvent = (e) => {
         let newSugarItems = sugarItems
         newSugarItems.push({
@@ -81,18 +100,29 @@ const Main = ({id, go, fetchedUser}) => {
         })
         setSugarItems(newSugarItems)
 
-        setSugarActiveModal(null)
+        setActiveModal(null)
         processDate({
             curValue: e.detail.curValue,
             curDate: new Date(e.detail.curDate)
-        })
+        }, 'sugar')
     }
 
-    const processDate = (detail) => {
-        console.log('processDate')
-        console.log(detail)
-        console.log(sugarChartData)
+    const handleAddInsulinEvent = (e) => {
+        let newInsulinItems = insulinItems
+        newInsulinItems.push({
+            curValue: e.detail.curValue,
+            curDate: (new Date(e.detail.curDate)).toLocaleString('ru')
+        })
+        setInsulinItems(newInsulinItems)
 
+        setActiveModal(null)
+        processDate({
+            curValue: e.detail.curValue,
+            curDate: new Date(e.detail.curDate)
+        }, 'insulin')
+    }
+
+    const processDate = (detail, type) => {
         const d = detail.curDate
         const v = detail.curValue
 
@@ -101,33 +131,44 @@ const Main = ({id, go, fetchedUser}) => {
         }
 
         const day = +d.getDate() - 17
-        console.log('day = ' + day)
         if (day < 0 || day > 7) {
             return
         }
 
-        let newSugarChartData = sugarChartData
-        newSugarChartData[day] = [sugarChartData[day][0], v]
+        if (type === 'sugar') {
+            let newSugarChartData = sugarChartData
+            newSugarChartData[day] = [sugarChartData[day][0], v]
+            setSugarChartData(newSugarChartData)
+        } else if (type === 'insulin') {
+            console.log('insulin')
+            let newInsulinChartData = insulinChartData
+            newInsulinChartData[day] = [insulinChartData[day][0], v]
+            setInsulinChartData(newInsulinChartData)
+        }
 
-        console.log('newSugarChartData:')
-        console.log(newSugarChartData)
-
-        setSugarChartData(newSugarChartData)
     }
 
-    const sugarModal = (
+
+    const modal = (
         <ModalRoot
-            activeModal={sugarActiveModal}
+            activeModal={activeModal}
             onClose={() => {
-                setSugarActiveModal(null)
+                setActiveModal(null)
             }}
         >
 
             <ModalCard
                 id={SUGAR_MODAL_CARD}
-                onClose={() => setSugarActiveModal(null)}
+                onClose={() => setActiveModal(null)}
             >
-                <AddSugarModal/>
+                <AddValueModal type='sugar' ed_izm={'ммоль/л'}/>
+            </ModalCard>
+
+            <ModalCard
+                id={INSULIN_MODAL_CARD}
+                onClose={() => setActiveModal(null)}
+            >
+                <AddValueModal type='insulin' ed_izm={'ед.'}/>
             </ModalCard>
         </ModalRoot>
     )
@@ -152,10 +193,10 @@ const Main = ({id, go, fetchedUser}) => {
                     Общее
                 </TabsItem>
 
-                <TabsItem onClick={() => setActiveTab(carbo)}
-                          selected={activeTab === carbo}>
-                    Углеводы
-                </TabsItem>
+                {/*<TabsItem onClick={() => setActiveTab(carbo)}*/}
+                {/*          selected={activeTab === carbo}>*/}
+                {/*    Углеводы*/}
+                {/*</TabsItem>*/}
 
                 <TabsItem onClick={() => setActiveTab(index)}
                           selected={activeTab === index}>
@@ -212,6 +253,13 @@ const Main = ({id, go, fetchedUser}) => {
                             <Title level='3' weight='semibold' className='card-subtitle'>10 единиц | 120 грамм</Title>
                             {/*<img className={'full-size-img'} src={perCarb} alt={'daily-calories'}/>*/}
                         </Div>
+
+                        <Div className='article-getstat'>
+                            <Div className='article-description' onClick={go} data-to='getStat'>
+                                <Title level='2' weight='semibold'>Получить статистику</Title>
+                                <Text weight='semibold'>TODO</Text>
+                            </Div>
+                        </Div>
                     </Div>
 
                     <Div className='articles-container'>
@@ -219,8 +267,11 @@ const Main = ({id, go, fetchedUser}) => {
                             Статьи
                         </Title>
 
+
                         {/*<Div className='articles'>*/}
-                        <Div className='article'>
+                        <Div className='article-diary' onClick={() => {
+                            window.open("https://vk.com/@-199696857-samokontrol-pri-saharnom-diabete-1-go-i-2-go-tipa-kogda-kak")
+                        }}>
                             <Div className='article-description'>
                                 <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
                                 <Text weight='semibold'>Для человека, больного диабетом, крайне важно вести дневник.
@@ -228,19 +279,13 @@ const Main = ({id, go, fetchedUser}) => {
                             </Div>
                         </Div>
 
-                        <Div className='article'>
+                        <Div className='article-gi' onClick={() => {
+                            window.open("https://vk.com/@-199696857-glikemicheskii-indeks-i-chto-o-nem-dolzhen-znat-diabetik")
+                        }}>
                             <Div className='article-description'>
-                                <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
-                                <Text weight='semibold'>Для человека, больного диабетом, крайне важно вести дневник.
-                                    Расскажем почему</Text>
-                            </Div>
-                        </Div>
-
-                        <Div className='article'>
-                            <Div className='article-description'>
-                                <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
-                                <Text weight='semibold'>Для человека, больного диабетом, крайне важно вести дневник.
-                                    Расскажем почему</Text>
+                                <Title level='2' weight='semibold'>О гликемическом индексе</Title>
+                                <Text weight='semibold'>Что такое гликемический индекс и
+                                    почему его важно знать</Text>
                             </Div>
                         </Div>
                         {/*</Div>*/}
@@ -282,8 +327,87 @@ const Main = ({id, go, fetchedUser}) => {
             }
 
             {
+                activeTab === insulin &&
+                <View modal={modal}>
+                    <Div>
+                        <Chart chartType="ColumnChart"
+                               width={'100%'} height={'45vh'}
+                               loader={<div>Loading Chart</div>}
+                               data={insulinChartData}
+
+                               options={{
+                                   chartArea: {'width': '85%', 'height': '85%'},
+                                   legend: "none"
+                               }}
+                               rootProps={{'data-testid': '3'}}
+                        />
+                    </Div>
+
+                    <Tabs mode="buttons" style={
+                        {
+                            width: '100%',
+                            borderRadius: '12px'
+                        }
+                    }>
+                        <HorizontalScroll style={
+                            {
+                                width: '100%'
+                            }
+                        }>
+                            <TabsItem className='tab-item-25'>
+                                День
+                            </TabsItem>
+                            <TabsItem selected className='tab-item-25'>
+                                Неделя
+                            </TabsItem>
+                            <TabsItem className='tab-item-25'>
+                                Месяц
+                            </TabsItem>
+                            <TabsItem className='tab-item-25'>
+                                Год
+                            </TabsItem>
+                        </HorizontalScroll>
+                    </Tabs>
+
+                    <List style={{
+                        marginBottom: '50px'
+                    }}>
+                        {
+                            insulinItems.map(item => (
+                                <Cell>
+                                    <ListItem val={item.curValue} date={item.curDate} ed_izm={'ед.'}/>
+                                </Cell>
+                            ))
+                        }
+                    </List>
+
+                    <FixedLayout vertical="bottom" style={
+                        {
+                            background: '#FFFFFF',
+                            paddingLeft: '8px',
+                            paddingRight: '8px'
+                        }
+                    }>
+                        <Div><Button
+                            onClick={() => setActiveModal(INSULIN_MODAL_CARD)}
+                            size='xl'
+                            before={<Icon24Add/>}
+                            mode="commerce"
+                            style={{
+                                width: '100%',
+                                marginBottom: '8px'
+                            }}>
+                            Добавить
+                        </Button>
+                        </Div>
+                    </FixedLayout>
+                </View>
+            }
+
+
+            {
                 activeTab === sugar &&
-                <View modal={sugarModal}>
+                <View modal={modal}>
                     <Div>
                         <Chart chartType="ColumnChart"
                                width={'100%'} height={'45vh'}
@@ -326,26 +450,15 @@ const Main = ({id, go, fetchedUser}) => {
                     </Tabs>
 
                     <List style={{
-                        marginBottom: '75px'
+                        marginBottom: '50px'
                     }}>
                         {
                             sugarItems.map(item => (
                                 <Cell>
-                                    <SugarListItem val={item.curValue} date={item.curDate}/>
+                                    <ListItem val={item.curValue} date={item.curDate} ed_izm={'ммоль/л'}/>
                                 </Cell>
                             ))
                         }
-                        {/*<Cell>*/}
-                        {/*    <SugarListItem val='3.75'/>*/}
-                        {/*</Cell>*/}
-
-                        {/*<Cell>*/}
-                        {/*    <SugarListItem val='3.75'/>*/}
-                        {/*</Cell>*/}
-
-                        {/*<Cell>*/}
-                        {/*    <SugarListItem val='3.75'/>*/}
-                        {/*</Cell>*/}
                     </List>
 
                     <FixedLayout vertical="bottom" style={
@@ -356,7 +469,7 @@ const Main = ({id, go, fetchedUser}) => {
                         }
                     }>
                         <Div><Button
-                            onClick={() => setSugarActiveModal(SUGAR_MODAL_CARD)}
+                            onClick={() => setActiveModal(SUGAR_MODAL_CARD)}
                             size='xl'
                             before={<Icon24Add/>}
                             mode="commerce"

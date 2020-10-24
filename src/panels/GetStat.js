@@ -8,12 +8,13 @@ import PanelHeaderButton from "@vkontakte/vkui/dist/components/PanelHeaderButton
 import {Button, IOS, platform} from "@vkontakte/vkui";
 import Icon28ChevronBack from "@vkontakte/icons/dist/28/chevron_back";
 import Icon24Back from "@vkontakte/icons/dist/24/back";
+import {FixedLayout} from "@vkontakte/vkui/dist/es6";
 const osName = platform();
 const GetStat = ({id, go, fetchedUser}) => {
      return (
-        <Panel id={1}>
+        <Panel id={id}>
             <PanelHeader
-                left={<PanelHeaderButton data-to="home">
+                left={<PanelHeaderButton onClick={go} data-to={'main'}>
                     {osName === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
                 </PanelHeaderButton>}
             >
@@ -40,7 +41,15 @@ const GetStat = ({id, go, fetchedUser}) => {
                 С наилучшими пожеланиями, команда φλεξ❤
             </Div>
 
-            <Div className="column-container">
+            <Div className="column-container" style={
+                {
+                    position: 'absolute',
+                    bottom: '0',
+                    width: '95%',
+                    paddingLeft: '8px',
+                    paddingRight: '8px'
+                }
+            }>
                 <Button size="xl" style={{marginBottom: 12, paddingTop: 0}}
                         onClick={() => window.open("https://vk.com/im?media=&sel=-199696857")}>
                     Написать сообществу
