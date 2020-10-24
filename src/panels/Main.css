@@ -111,11 +111,55 @@
     /*height: 100px;*/
     margin-top: 12px;
     /*height: 200px;*/
-    background: url(../img/perCarb.png) no-repeat center center;
+    /*background: url(../img/perCarb.png) no-repeat center center;*/
     font-size: 20px;
     /*display: flex;*/
     /*flex-direction: column;*/
     /*justify-content: ;*/
+}
+
+.article-diary {
+    border-radius: 12px;
+    margin-top: 12px;
+    height: 200px;
+    background: url(../img/dn.png);
+    /*background-size: 100% 100%;*/
+    background-size: cover;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.article-gi {
+    border-radius: 12px;
+    margin-top: 12px;
+    height: 200px;
+    background: url(../img/glikIndex.png);
+    /*background-size: 100% 100%;*/
+    background-size: cover;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+
+.article-getstat {
+    border-radius: 12px;
+    margin-top: 12px;
+    height: 100px;
+    background: url(../img/getStat.png);
+    /*background-size: 100% 100%;*/
+    background-size: cover;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.article-description {
+    color: #000000;
 }
 
 .article div, .article h2 {
