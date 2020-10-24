@@ -75,7 +75,10 @@ const Main = ({id, go, fetchedUser}) => {
 
     const handleAddSugarEvent = (e) => {
         let newSugarItems = sugarItems
-        newSugarItems.push(e.detail)
+        newSugarItems.push({
+            curValue: e.detail.curValue,
+            curDate: (new Date(e.detail.curDate)).toLocaleString('ru')
+        })
         setSugarItems(newSugarItems)
 
         setSugarActiveModal(null)
@@ -173,16 +176,7 @@ const Main = ({id, go, fetchedUser}) => {
                         <Chart chartType='LineChart'
                                width={'80vw'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
-                               data={[
-                                   ['x', 'v'],
-                                   ['16.10', 0],
-                                   ['17.10', 10],
-                                   ['18.10', 23],
-                                   ['19.10', 17],
-                                   ['20.10', 18],
-                                   ['21.10', 9],
-                                   ['22.10', 11]
-                               ]}
+                               data={sugarChartData}
 
                                options={{
                                    chartArea: {'width': '95%', 'height': '85%'}
