@@ -41,7 +41,7 @@ class SugarListItem extends React.Component {
                     {this.props.date}
                 </Text>
 
-                <Icon16Clear width={20} height={20} style={{color:'red'}}/>
+                <Icon16Clear width={25} height={25} style={{color:'red'}}/>
             </Div>
         )
     }
