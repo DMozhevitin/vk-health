@@ -40,6 +40,16 @@ const Main = ({id, go, fetchedUser}) => {
     const [sugarItems, setSugarItems] = useState([])
     const [sugarActiveModal, setSugarActiveModal] = useState(null)
     const [lastSugarButtonPress, setLastSugarButtonPress] = useState(+(new Date()))
+    const [sugarDaysOfWeek, setSugarDaysOfWeek] = useState(new Set())
+    const [sugarChartData, setSugarChartData] = useState(
+        [['x', ''],
+        ['18.10', 0],
+        ['19.10', 0],
+        ['20.10', 0],
+        ['21.10', 0],
+        ['22.10', 0],
+        ['23.10', 0],
+        ['24.10', 0]])
 
     const insulin = 'insulin'
     const sugar = 'sugar'
@@ -58,38 +68,61 @@ const Main = ({id, go, fetchedUser}) => {
     useEffect(() => {
         window.addEventListener('on-sugar-modal-close', handleAddSugarEvent)
 
-        return () => { window.removeEventListener('keydown', handleAddSugarEvent) }
+        return () => {
+            window.removeEventListener('keydown', handleAddSugarEvent)
+        }
     }, [])
 
     const handleAddSugarEvent = (e) => {
-        console.log(e)
-        onAddSugarItem(e.detail)
+        let newSugarItems = sugarItems
+        newSugarItems.push(e.detail)
+        setSugarItems(newSugarItems)
+
         setSugarActiveModal(null)
+        processDate({
+            curValue: e.detail.curValue,
+            curDate: new Date(e.detail.curDate)
+        })
     }
 
-    const onAddSugarItem = (e) => {
-        let newSugarItems = sugarItems
-        newSugarItems.push(e)
+    const processDate = (detail) => {
+        console.log('processDate')
+        console.log(detail)
+        console.log(sugarChartData)
 
-        setSugarItems(newSugarItems)
+        const d = detail.curDate
+        const v = detail.curValue
+
+        if (d.getMonth() !== 9) {
+            return
+        }
+
+        const day = +d.getDate() - 17
+        console.log('day = ' + day)
+        if (day < 0 || day > 7) {
+            return
+        }
+
+        let newSugarChartData = sugarChartData
+        newSugarChartData[day] = [sugarChartData[day][0], v]
+
+        console.log('newSugarChartData:')
+        console.log(newSugarChartData)
+
+        setSugarChartData(newSugarChartData)
     }
 
     const sugarModal = (
         <ModalRoot
             activeModal={sugarActiveModal}
-            onClose={() => {setSugarActiveModal(null)}}
+            onClose={() => {
+                setSugarActiveModal(null)
+            }}
         >
 
             <ModalCard
                 id={SUGAR_MODAL_CARD}
                 onClose={() => setSugarActiveModal(null)}
-                // actions={[{
-                //     title: 'Добавить',
-                //     mode: 'commerce',
-                //     action: () => {
-                //         setTimeout(() => setSugarActiveModal(null), 100)
-                //     }
-                // }]}
             >
                 <AddSugarModal/>
             </ModalCard>
@@ -102,7 +135,7 @@ const Main = ({id, go, fetchedUser}) => {
             <Tabs>
                 <TabsItem
                     onClick={() => setActiveTab(insulin)}
-                          selected={activeTab === insulin}>
+                    selected={activeTab === insulin}>
                     Инсулин
                 </TabsItem>
 
@@ -141,7 +174,7 @@ const Main = ({id, go, fetchedUser}) => {
                                width={'80vw'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
                                data={[
-                                   ['x', 'dogs'],
+                                   ['x', 'v'],
                                    ['16.10', 0],
                                    ['17.10', 10],
                                    ['18.10', 23],
@@ -250,33 +283,24 @@ const Main = ({id, go, fetchedUser}) => {
                 activeTab === sugar &&
                 <View modal={sugarModal}>
                     <Chart chartType='LineChart'
-                           width={'80vw'} height={'45vh'}
+                           width={'100%'} height={'45vh'}
                            loader={<div>Loading Chart</div>}
-                           data={[
-                               ['x', 'dogs'],
-                               ['16.10', 0],
-                               ['17.10', 10],
-                               ['18.10', 23],
-                               ['19.10', 17],
-                               ['20.10', 18],
-                               ['21.10', 9],
-                               ['22.10', 11]
-                           ]}
+                           data={sugarChartData}
 
                            options={{
                                chartArea: {'width': '95%', 'height': '85%'}
                            }}
-                           rootProps={{'data-testid': '1'}}
+                           rootProps={{'data-testid': '2'}}
                     />
 
-                    <Tabs mode="buttons" style = {
+                    <Tabs mode="buttons" style={
                         {
                             width: '100%',
                             // background: '#EBEDF0',
                             borderRadius: '12px'
                         }
                     }>
-                        <HorizontalScroll style = {
+                        <HorizontalScroll style={
                             {
                                 width: '100%'
                             }
@@ -330,11 +354,11 @@ const Main = ({id, go, fetchedUser}) => {
                             before={<Icon24Add/>}
                             mode="commerce"
                             style={{
-                            width: '100%',
-                            marginBottom: '8px',
-                            // display: 'flex',
-                            // flexDirection: 'row',
-                        }}>
+                                width: '100%',
+                                marginBottom: '8px',
+                                // display: 'flex',
+                                // flexDirection: 'row',
+                            }}>
                             Добавить
                         </Button>
                     </FixedLayout>

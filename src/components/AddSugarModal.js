@@ -13,7 +13,10 @@ class AddSugarModal extends React.Component {
     render() {
 
         const handleButtonClick = () => {
-            window.dispatchEvent(new CustomEvent('on-sugar-modal-close', {detail: this.state}))
+            window.dispatchEvent(new CustomEvent('on-sugar-modal-close', {detail: {
+                    curValue: this.state.curValue,
+                    curDate: this.state.curDate
+                }}))
         }
 
         return (
