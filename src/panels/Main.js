@@ -359,7 +359,9 @@ const Main = ({id, go, fetchedUser}) => {
                 <View modal={modal}>
                     <Div className={'chart-container'}>
                         <Div className='chart-title-container'>
-                            <Title className="chart-title" level="4" weight="semibold">
+                            <Title className="chart-title" level="4" weight="semibold" style={{
+                                fontSize: "14px"
+                            }}>
                                 Уровень инсулина за последнюю неделю
                             </Title>
                         </Div>
