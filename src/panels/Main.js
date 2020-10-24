@@ -58,7 +58,9 @@ const Main = ({id, go, fetchedUser}) => {
     useEffect(() => {
         window.addEventListener('on-sugar-modal-close', handleAddSugarEvent)
 
-        return () => { window.removeEventListener('keydown', handleAddSugarEvent) }
+        return () => {
+            window.removeEventListener('keydown', handleAddSugarEvent)
+        }
     }, [])
 
     const handleAddSugarEvent = (e) => {
@@ -77,7 +79,9 @@ const Main = ({id, go, fetchedUser}) => {
     const sugarModal = (
         <ModalRoot
             activeModal={sugarActiveModal}
-            onClose={() => {setSugarActiveModal(null)}}
+            onClose={() => {
+                setSugarActiveModal(null)
+            }}
         >
 
             <ModalCard
@@ -102,7 +106,7 @@ const Main = ({id, go, fetchedUser}) => {
             <Tabs>
                 <TabsItem
                     onClick={() => setActiveTab(insulin)}
-                          selected={activeTab === insulin}>
+                    selected={activeTab === insulin}>
                     Инсулин
                 </TabsItem>
 
@@ -129,7 +133,7 @@ const Main = ({id, go, fetchedUser}) => {
 
             {
                 (activeTab === main) &&
-                <Div>
+                <div>
                     <Div className={'chart-container'}>
                         <Div className='chart-title-container'>
                             <Title className="chart-title" level="3" weight="semibold">
@@ -138,7 +142,7 @@ const Main = ({id, go, fetchedUser}) => {
                         </Div>
 
                         <Chart chartType='LineChart'
-                               width={'80vw'} height={'45vh'}
+                               width={'100%'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
                                data={[
                                    ['x', 'dogs'],
@@ -160,7 +164,7 @@ const Main = ({id, go, fetchedUser}) => {
 
 
                     <Div className={'cards-container'}>
-                        <Title level='3' className='cards-container-title'>
+                        <Title level='3' className='articles-container-title'>
                             Сегодня
                         </Title>
                         <Div className={'cards-container-top'}>
@@ -191,7 +195,7 @@ const Main = ({id, go, fetchedUser}) => {
                             Статьи
                         </Title>
 
-                        <Div className='articles'>
+                        {/*<Div className='articles'>*/}
                             <Div className='article'>
                                 <Div className='article-description'>
                                     <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
@@ -215,9 +219,9 @@ const Main = ({id, go, fetchedUser}) => {
                                         Расскажем почему</Text>
                                 </Div>
                             </Div>
-                        </Div>
+                        {/*</Div>*/}
                     </Div>
-                </Div>
+                </div>
             }
 
 
@@ -269,14 +273,14 @@ const Main = ({id, go, fetchedUser}) => {
                            rootProps={{'data-testid': '1'}}
                     />
 
-                    <Tabs mode="buttons" style = {
+                    <Tabs mode="buttons" style={
                         {
                             width: '100%',
                             // background: '#EBEDF0',
                             borderRadius: '12px'
                         }
                     }>
-                        <HorizontalScroll style = {
+                        <HorizontalScroll style={
                             {
                                 width: '100%'
                             }
@@ -330,11 +334,11 @@ const Main = ({id, go, fetchedUser}) => {
                             before={<Icon24Add/>}
                             mode="commerce"
                             style={{
-                            width: '100%',
-                            marginBottom: '8px',
-                            // display: 'flex',
-                            // flexDirection: 'row',
-                        }}>
+                                width: '100%',
+                                marginBottom: '8px',
+                                // display: 'flex',
+                                // flexDirection: 'row',
+                            }}>
                             Добавить
                         </Button>
                     </FixedLayout>
