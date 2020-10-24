@@ -165,7 +165,7 @@ const Main = ({id, go, fetchedUser}) => {
 
             {
                 (activeTab === main) &&
-                <div>
+                <Div>
                     <Div className={'chart-container'}>
                         <Div className='chart-title-container'>
                             <Title className="chart-title" level="3" weight="semibold">
@@ -179,7 +179,7 @@ const Main = ({id, go, fetchedUser}) => {
                                data={sugarChartData}
                                legendToggle
                                options={{
-                                   chartArea: {'width': '90%', 'height': '85%'},
+                                   chartArea: {'width': '85%', 'height': '85%'},
                                    legend: "none"
                                }}
                                rootProps={{'data-testid': '1'}}
@@ -245,7 +245,7 @@ const Main = ({id, go, fetchedUser}) => {
                             </Div>
                         {/*</Div>*/}
                     </Div>
-                </div>
+                </Div>
             }
 
 
@@ -284,17 +284,19 @@ const Main = ({id, go, fetchedUser}) => {
             {
                 activeTab === sugar &&
                 <View modal={sugarModal}>
+                    <Div>
                     <Chart chartType="ColumnChart"
                            width={'100%'} height={'45vh'}
                            loader={<div>Loading Chart</div>}
                            data={sugarChartData}
 
                            options={{
-                               chartArea: {'width': '90%', 'height': '85%'},
+                               chartArea: {'width': '85%', 'height': '85%'},
                                legend: "none"
                            }}
                            rootProps={{'data-testid': '2'}}
                     />
+                    </Div>
 
                     <Tabs mode="buttons" style={
                         {
