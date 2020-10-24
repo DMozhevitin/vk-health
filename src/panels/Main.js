@@ -212,6 +212,13 @@ const Main = ({id, go, fetchedUser}) => {
                             <Title level='3' weight='semibold' className='card-subtitle'>10 единиц | 120 грамм</Title>
                             {/*<img className={'full-size-img'} src={perCarb} alt={'daily-calories'}/>*/}
                         </Div>
+
+                        <Div className='article-getstat'>
+                            <Div className='article-description'>
+                                <Title level='2' weight='semibold'>Получить статистику</Title>
+                                <Text weight='semibold'>TODO</Text>
+                            </Div>
+                        </Div>
                     </Div>
 
                     <Div className='articles-container'>
@@ -219,8 +226,11 @@ const Main = ({id, go, fetchedUser}) => {
                             Статьи
                         </Title>
 
+
                         {/*<Div className='articles'>*/}
-                        <Div className='article'>
+                        <Div className='article-diary' onClick={() => {
+                            window.open("https://vk.com/@tech-emotions-map")
+                        }}>
                             <Div className='article-description'>
                                 <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
                                 <Text weight='semibold'>Для человека, больного диабетом, крайне важно вести дневник.
@@ -228,19 +238,13 @@ const Main = ({id, go, fetchedUser}) => {
                             </Div>
                         </Div>
 
-                        <Div className='article'>
-                            <Div className='article-description'>
-                                <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
-                                <Text weight='semibold'>Для человека, больного диабетом, крайне важно вести дневник.
-                                    Расскажем почему</Text>
-                            </Div>
-                        </Div>
-
-                        <Div className='article'>
-                            <Div className='article-description'>
-                                <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
-                                <Text weight='semibold'>Для человека, больного диабетом, крайне важно вести дневник.
-                                    Расскажем почему</Text>
+                        <Div className='article-gi' onClick={() => {
+                            window.open("https://vk.com/@tech-emotions-map")
+                        }}>
+                            <Div className='article-description' href="https://vk.com/@tech-emotions-map">
+                                <Title level='2' weight='semibold'>О гликемическом индексе</Title>
+                                <Text weight='semibold'>Что такое гликемический индекс и
+                                    почему его важно знать</Text>
                             </Div>
                         </Div>
                         {/*</Div>*/}
