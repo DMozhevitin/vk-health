@@ -229,7 +229,7 @@ const Main = ({id, go, fetchedUser}) => {
 
                         {/*<Div className='articles'>*/}
                         <Div className='article-diary' onClick={() => {
-                            window.open("https://vk.com/@tech-emotions-map")
+                            window.open("https://vk.com/@-199696857-samokontrol-pri-saharnom-diabete-1-go-i-2-go-tipa-kogda-kak")
                         }}>
                             <Div className='article-description'>
                                 <Title level='2' weight='semibold'>Почему важно вести дневник</Title>
@@ -239,9 +239,9 @@ const Main = ({id, go, fetchedUser}) => {
                         </Div>
 
                         <Div className='article-gi' onClick={() => {
-                            window.open("https://vk.com/@tech-emotions-map")
+                            window.open("https://vk.com/@-199696857-glikemicheskii-indeks-i-chto-o-nem-dolzhen-znat-diabetik")
                         }}>
-                            <Div className='article-description' href="https://vk.com/@tech-emotions-map">
+                            <Div className='article-description'>
                                 <Title level='2' weight='semibold'>О гликемическом индексе</Title>
                                 <Text weight='semibold'>Что такое гликемический индекс и
                                     почему его важно знать</Text>
