@@ -155,8 +155,10 @@ const Main = ({id, go, fetchedUser}) => {
             setSugarChartData(newSugarChartData)
         } else if (type === 'insulin') {
             console.log('insulin')
+            console.log('day:')
+            console.log(day)
             let newInsulinChartData = insulinChartData
-            newInsulinChartData[day] = [insulinChartData[day][0], insulinChartData[day][1] + v]
+            newInsulinChartData[day] = [insulinChartData[day][0], +insulinChartData[day][1] + v]
             setInsulinChartData(newInsulinChartData)
         }
 
@@ -369,7 +371,7 @@ const Main = ({id, go, fetchedUser}) => {
                         <Chart chartType="ColumnChart"
                                width={'100%'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
-                               data={sugarChartData}
+                               data={insulinChartData}
                                legendToggle
                                options={{
                                    chartArea: {'width': '85%', 'height': '85%'},
