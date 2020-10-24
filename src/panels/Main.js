@@ -227,10 +227,10 @@ const Main = ({id, go, fetchedUser}) => {
 
             {
                 (activeTab === main) &&
-                <Div>
+                <div>
                     <Div className={'chart-container'}>
                         <Div className='chart-title-container'>
-                            <Title className="chart-title" level="3" weight="semibold">
+                            <Title className="chart-title" level="4" weight="semibold">
                                 Уровень сахара за последнюю неделю
                             </Title>
                         </Div>
@@ -318,7 +318,7 @@ const Main = ({id, go, fetchedUser}) => {
                         </Div>
                         {/*</Div>*/}
                     </Div>
-                </Div>
+                </div>
             }
 
 
@@ -357,20 +357,23 @@ const Main = ({id, go, fetchedUser}) => {
             {
                 activeTab === insulin &&
                 <View modal={modal}>
-                    <Div>
-                        <Title className="chart-title" level="3" weight="semibold">
-                            Уровень инсулина за последнюю неделю
-                        </Title>
+                    <Div className={'chart-container'}>
+                        <Div className='chart-title-container'>
+                            <Title className="chart-title" level="4" weight="semibold">
+                                Уровень инсулина за последнюю неделю
+                            </Title>
+                        </Div>
+
                         <Chart chartType="ColumnChart"
                                width={'100%'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
-                               data={insulinChartData}
-
+                               data={sugarChartData}
+                               legendToggle
                                options={{
                                    chartArea: {'width': '85%', 'height': '85%'},
                                    legend: "none"
                                }}
-                               rootProps={{'data-testid': '3'}}
+                               rootProps={{'data-testid': '1'}}
                         />
                     </Div>
 
@@ -439,20 +442,23 @@ const Main = ({id, go, fetchedUser}) => {
             {
                 activeTab === sugar &&
                 <View modal={modal}>
-                    <Div>
-                        <Title className="chart-title" level="3" weight="semibold">
-                            Уровень сахара за последнюю неделю
-                        </Title>
+                    <Div className={'chart-container'}>
+                        <Div className='chart-title-container'>
+                            <Title className="chart-title" level="4" weight="semibold">
+                                Уровень сахара за последнюю неделю
+                            </Title>
+                        </Div>
+
                         <Chart chartType="ColumnChart"
                                width={'100%'} height={'45vh'}
                                loader={<div>Loading Chart</div>}
                                data={sugarChartData}
-
+                               legendToggle
                                options={{
                                    chartArea: {'width': '85%', 'height': '85%'},
                                    legend: "none"
                                }}
-                               rootProps={{'data-testid': '2'}}
+                               rootProps={{'data-testid': '1'}}
                         />
                     </Div>
 
