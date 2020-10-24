@@ -43,7 +43,7 @@ const FoodInfo = props => (
                     <Headline weight="regular" style={{color: "#828282", textAlign: "center"}}>Гликемический
                         индекс</Headline>
                     <Div><Title level="1" weight="medium"
-                                style={{color: "#FCE56D", textAlign: "center"}}>20</Title></Div>
+                                style={{color: "#4BB34B", textAlign: "center"}}>20</Title></Div>
                 </Div>
 
                 <Div className="column-container">
@@ -86,9 +86,9 @@ const FoodInfo = props => (
                 </Text>
             </Div>
             <Div>
-                <Button size="xl">Добавить в дневник еды</Button>
-            </Div>
-            <Div>
+                <Button size="xl" style={{
+                    marginBottom:"12px"
+                }}>Добавить в дневник еды</Button>
                 <Button mode="commerce" size="xl">Добавить в избранное</Button>
             </Div>
 
