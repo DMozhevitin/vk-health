@@ -326,14 +326,14 @@ const Main = ({id, go, fetchedUser}) => {
                     }>
                         <Button
                             onClick={() => setSugarActiveModal(SUGAR_MODAL_CARD)}
-                            size='l'
+                            size='xl'
                             before={<Icon24Add/>}
                             mode="commerce"
                             style={{
                             width: '100%',
                             marginBottom: '8px',
-                            display: 'flex',
-                            flexDirection: 'row',
+                            // display: 'flex',
+                            // flexDirection: 'row',
                         }}>
                             Добавить
                         </Button>
