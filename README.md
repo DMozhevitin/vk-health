@@ -31,3 +31,8 @@ VK-miniapp, созданное для контроля показателя ур
 ### Технологии
 - [React.js](https://reactjs.org/)
 - [VKUI library](https://github.com/VKCOM/VKUI)
+
+### Авторы
+- [Дмитрий Можевитин](https://github.com/DMozhevitin)
+- [Фадеев Сергей](http://github.com/fadeevsergey)
+- [Николай Ярлыченко](http://github.com/kol9)
